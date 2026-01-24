@@ -1,0 +1,23 @@
+database:
+  database: taxidb
+  host: localhost
+  port: 5432
+  username: aneto
+  password: castor107
+url: https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet
+fname: rides.parquet
+period:
+  start_date: '2024-01-01'
+  end_date: '2024-01-02'
+columns:
+- pickup_datetime
+- dropoff_datetime
+- pickup_latitude
+- pickup_longitude
+- dropoff_latitude
+- dropoff_longitude
+- passenger_count
+- payment_type
+- rate_code
+- total_amount
+

@@ -1,0 +1,3 @@
+
+
+python main.py --song_dir data/oasis --out_file results/out.json

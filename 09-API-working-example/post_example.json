@@ -1,0 +1,13 @@
+{
+    "pickup_datetime": "2025-01-29 16:15:00",
+    "dropoff_datetime": "2025-01-29 16:25:00",
+    "pickup_latitude": 40.794683,
+    "pickup_longitude": -73.956153,
+    "dropoff_latitude": 40.773407,
+    "dropoff_longitude": -73.872184,
+    "passenger_count": 10,
+    "payment_type": 1,
+    "rate_code": 1,
+    "tip_amount": 15.4,
+    "total_amount": 30.2
+}

@@ -1,0 +1,15 @@
+{
+    "champagne supernova": {
+        "number of characters": 1584,
+        "number of words": 333,
+        "number of verses": 62,
+        "most frequent word": {
+            "word": "were",
+            "count": 22
+        },
+        "most frequent verses": {
+            "verse": "we were getting high",
+            "count": 10
+        }
+    }
+}
