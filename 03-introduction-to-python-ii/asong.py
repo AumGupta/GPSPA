@@ -2,10 +2,11 @@ import utils as u
 import json
 
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, abspath, dirname
 
-LOGGER = u.ProcessController("asong", "./log")
-FORBIDDEN_WORDS = ["a", "the", "than", "that", "in"]
+base_dir = dirname(abspath(__file__))
+LOGGER = u.ProcessController("asong", join(base_dir, "log"))
+FORBIDDEN_WORDS = ["a", "the", "than", "that", "in", "i"]
 # TODO: Add any necessary constants for example pontuation
 # and other characters you want to exclude from letter and word counting
 
@@ -13,7 +14,7 @@ def read_file(fname: str) -> dict:
     """Reads a song file
 
     Args:
-        fname (str): the name of the file
+        fname (str): the name of the file '/location/name.extension'
 
     Returns:
         dict: the song
@@ -23,8 +24,8 @@ def read_file(fname: str) -> dict:
         with open(fname, "r") as f:
             song = {i: line for i, line in enumerate(f)}
         # Get the song name
-        # TODO: extract the song name based on fname
-        song_name = ""
+        # TODO: [REFINE] extract the song name based on fname
+        song_name = fname.split('/')[-1].split('.')[-2][3:].replace('_',' ').title()
     except Exception as e:
         LOGGER.error(f"{e}")
     return {
@@ -33,7 +34,6 @@ def read_file(fname: str) -> dict:
     }
 
 
-# TODO: Implement me!
 def count_characters(s: str) -> int:
     """Counts the non-space characters in a string
 
@@ -47,10 +47,23 @@ def count_characters(s: str) -> int:
           >> count_characters("12 34")
           4
     """
-    pass
+    return len(s.replace(' ', ''))
 
+def clean(s: str) -> str:
+    """
+    Removes all the characters from a string that are not alphabets or spaces.
+    
+    :param s: Description
+    :type s: str
+    :return: Description
+    :rtype: str
+    """
+    for i in s.lower():
+        if i == ' ' or (ord(i) > 96 and ord(i) < 123):
+            continue
+        s = s.replace(i,'')
+    return s
 
-# TODO: Implement me!
 def count_words(s: str) -> int:
     """ Counts the number of words in a string
 
@@ -60,43 +73,55 @@ def count_words(s: str) -> int:
         Returns:
           int: the number of words in s
     """
-    pass
+    return len([x for x in clean(s).split(' ') if x!=''])
 
 
 def word_frequency(verses: dict) -> dict:
-    # TODO: write docstring
-    # TODO: What is this line doing?
-    s = " ".join([verses[vix] for vix in verses]) # make this clearer
+    """ Counts the frequency of most frequent word in the song
+    
+        Args:
+          verses [dict]: the dictionary of verses
 
-list = []
-for vix in verses:
-    list.append(verses[vix])
+        Returns:
+          dictionary: frequency of most frequent word
+    """
+    s = "".join([verses[vix].replace('\n',' ') for vix in verses]) # make this clearer
 
-    # TODO: remove unnecessary characters from s
-    # and convert to lower-case
-   
-    # Break the string into words
-    words = s.split(" ")
-    word_set = set(words)
-    max_count = 0
-    max_word = ""
-    for w in word_set:
-        if w not in FORBIDDEN_WORDS:
-            count = 0
-            for ww in words:
-                if ww == w:
-                    count += 1
-            if count > max_count:
-                max_count = count
-                max_word = w
-    return {
-        "word": max_word,
-        "count": max_count,
-    }
+    list = []
+    for vix in verses:
+        list.append(verses[vix])
+
+        s=clean(s).lower()
+    
+        # Break the string into words
+        words = s.split(" ")
+        word_set = set(words)
+        max_count = 0
+        max_word = ""
+        for w in word_set:
+            if w not in FORBIDDEN_WORDS:
+                count = 0
+                for ww in words:
+                    if ww == w:
+                        count += 1
+                if count > max_count:
+                    max_count = count
+                    max_word = w
+        return {
+            "word": max_word,
+            "count": max_count,
+        }
 
 
 def verse_frequency(verses: dict) -> dict:
-    # TODO: write docstring
+    """ Counts the frequency of most frequent verse in the song
+    
+        Args:
+          verses [dict]: the dictionary of verses
+
+        Returns:
+          dictionary: frequency of most frequent verse
+    """
     verse_list = [verses[vix].lower().replace("\n", "")
                   for vix in verses]
     verse_set = set(verse_list)
@@ -120,7 +145,7 @@ def song_analyser(song: dict) -> dict:
     """Analyses a song
 
     Args:
-        song (dict): a dictionary represenging a song
+        song (dict): a dictionary representing a song
 
     Returns:
         dict: dictionary describing the song
@@ -136,7 +161,7 @@ def song_analyser(song: dict) -> dict:
         num_characters += count_characters(v)
         num_words += count_words(v)
         num_verses += 1
-        # TODO: Use the logger to inform the user of what is as suggested in the README.md file
+        LOGGER.info(f"working on '{song_name}' : {num_verses} lines of {len(verses)} analysed.")
     return {
         "song name": song_name,
         "stats": {
@@ -194,4 +219,7 @@ def save_result(data: dict, outfile: str) -> None:
 
 if __name__ == "__main__":
     # Test read_file function
-    print(read_file('/home/aneto/SynologyDrive/Trabalho/NOVA IMS/GPS Janeiro 2024/Conteudos/03-introduction-to-python-ii/data/oasis/01-wonderwall.txt'))
+    song = read_file(join(base_dir, "data/oasis/01-wonderwall.txt"))
+    print(song)
+    # Test error logging
+    read_file(join(base_dir, "data/oasis/01-ola.txt"))

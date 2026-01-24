@@ -11,7 +11,7 @@ class ProcessController:
         logger = logging.getLogger(name)
         logger.propagate = False
 
-        logfile = dt.datetime.now().strftime("%Y-%m-%d")
+        logfile = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
         logfile = f"{logdir}/{logfile}.log"
 
         # Create handlers
