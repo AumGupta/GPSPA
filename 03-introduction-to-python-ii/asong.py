@@ -47,7 +47,7 @@ def count_characters(s: str) -> int:
           >> count_characters("12 34")
           4
     """
-    return len(s.replace(' ', ''))
+    return len(s.replace(' ', '').replace('\n','')) # len(s) - s.count(' ')
 
 def clean(s: str) -> str:
     """
@@ -120,7 +120,7 @@ def verse_frequency(verses: dict) -> dict:
           verses [dict]: the dictionary of verses
 
         Returns:
-          dictionary: frequency of most frequent verse
+          dict: frequency of most frequent verse
     """
     verse_list = [verses[vix].lower().replace("\n", "")
                   for vix in verses]

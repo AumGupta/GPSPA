@@ -1,6 +1,6 @@
 {
     "Wonderwall": {
-        "number of characters": 1141,
+        "number of characters": 1100,
         "number of words": 282,
         "number of verses": 42,
         "most frequent word": {
@@ -8,12 +8,12 @@
             "count": 12
         },
         "most frequent verses": {
-            "verse": "feels the way i do about you now",
+            "verse": "you're my wonderwall",
             "count": 3
         }
     },
     "Champagne Supernova": {
-        "number of characters": 1584,
+        "number of characters": 1523,
         "number of words": 333,
         "number of verses": 62,
         "most frequent word": {
@@ -26,7 +26,7 @@
         }
     },
     "Angle Child": {
-        "number of characters": 988,
+        "number of characters": 955,
         "number of words": 245,
         "number of verses": 34,
         "most frequent word": {
@@ -39,11 +39,11 @@
         }
     },
     "Dont Go Away": {
-        "number of characters": 1159,
+        "number of characters": 1104,
         "number of words": 301,
         "number of verses": 56,
         "most frequent word": {
-            "word": "time",
+            "word": "say",
             "count": 14
         },
         "most frequent verses": {
