@@ -14,59 +14,112 @@ To question the database we use a SELECT statment, which has this form:
 
 -- 0. Show all columns and rows from the table offices
 -- * == all columns
-
+SELECT * FROM offices;
 
 -- 1. Show all rows from the table offices, but only the officecode, country, state and city columns
+SELECT officecode, country, state, city FROM offices;
 
 -- 2. Same as before, but renaming the names of the columns
+SELECT officecode AS oic, country AS countries, state AS states, city AS Cities  FROM offices;
+
 
 -- 3. Sames as before, but sorted by country, state, city.
 -- * == all columns
+SELECT officecode AS oic, country AS countries, state AS states, city AS Cities  
+FROM offices 
+ORDER BY country, state, city;
 
 -- 4. List all information of the offices from the country USA
+SELECT * FROM offices WHERE country='USA';
 
 -- 5. How many employees are there in the company?
 -- count() is an aggregator fucntion
+SELECT count(employeenumber) AS employee_count FROM employees;
 
 -- 6. What is the total of payments received?
-
 -- sum() is an aggregator function
+SELECT sum(amount) AS total_payment FROM payments;
 
 -- 7. Show the total of payments received by each customer
+SELECT 
+	customernumber, 
+	sum(amount) AS total_payment 
+FROM payments 
+GROUP BY customernumber;
 
 -- 8. What is the total of payments done by customer with the number 103
+SELECT 
+	customernumber, 
+	sum(amount) AS total_payment 
+FROM payments
+GROUP BY customernumber
+HAVING customernumber='103';
+
 
 -- 9. List the product lines that contain 'Cars'.
-
+SELECT productline FROM productlines WHERE productline LIKE '%Cars';
+ 
 -- 10. Report total payments for October 28, 2004.
+SELECT sum(amount) FROM payments WHERE paymentdate='28-10-2004';
 
 -- 11. Report those payments greater than $100,000
+SELECT checknumber, amount FROM payments WHERE amount>100000;
 
 -- 12. Report the top-3 most expensive payments
+SELECT amount FROM payments ORDER BY amount DESC LIMIT 3;
 
 -- 13. Report all payments including the customername
+SELECT 
+	c.customername, 
+	p.checknumber, 
+	p.amount
+FROM 
+	customers AS c,
+	payments AS p;
 
 -- 14. Report the top-3 most expensive payments including the customername, contactfirstname, and contactlastname
+SELECT 
+	c.customername, 
+	c.contactfirstname,
+	c.contactlastname,
+	p.checknumber, 
+	p.amount
+FROM 
+	customers AS c,
+	payments AS p
+ORDER BY p.amount DESC LIMIT 3;
 
 -- 15. CROSS-JOIN = all possible pairs of (employees, offices)
+SELECT * FROM employees CROSS JOIN offices;
 
 -- 16. How many products exist in each product line?
+SELECT productline, COUNT(*) 
+FROM products
+GROUP BY productline;
 
--- 	 16.1 What if there are no products in a certain product line?
+-- 	16.1 What if there are no products in a certain product line?
 
 --  16.2 We need to use a LEFT JOIN to preserve all columns in the LEFT (productlines)
 
 -- 17. What is the minimum payment received?
+SELECT checknumber, amount FROM payments ORDER BY amount LIMIT 1;
 
 -- 18. List all payments greater than twice the average payment.
 
 -- 19. What is the average percentage markup of the MSRP on buyPrice?
 -- The percentage is calculate with 100 * (msrp - buyprice) / msrp
+SELECT *, (100 * (msrp - buyprice) / msrp) AS avg_percent FROM products;
 
 -- 20. List the distinct vendor of products?
+SELECT DISTINCT productvendor, productname FROM products;
 
+-- SELECT DISTINCT ON (productvendor) productvendor, productname, buyprice 
+-- FROM products
+-- ORDER BY productvendor, buyprice DESC;
 
-
+-- SELECT productvendor, max(buyprice)
+-- FROM products
+-- GROUP BY productvendor ORDER BY productvendor;
 
 -- EXTRA QUERIES/ Exercises
 
@@ -95,7 +148,10 @@ To question the database we use a SELECT statment, which has this form:
 -- 35. List products ending in 'ship'.
 -- 36. Report the number of customers in Denmark, Norway, and Sweden.
 -- 37. What are the products with a product code in the range S700_1000 to S700_1499?
+
 -- 38. Which customers have a digit in their name?
+SELECT * FROM customers WHERE customername ~ '.*\d.*';
+
 -- 39. List the names of employees called Dianne or Diane.
 -- 40. List the products containing ship or boat in their product name.
 -- 41. List the products with a product code beginning with S700.

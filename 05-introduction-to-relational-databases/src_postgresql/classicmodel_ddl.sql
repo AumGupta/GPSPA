@@ -1,5 +1,5 @@
 
-CREATE DATABASE classic_model;
+-- CREATE DATABASE classic_model;
 
 /*
 This is a multi-line comment.
