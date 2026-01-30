@@ -2,7 +2,7 @@
 
 -- Show everything from a table 
 SELECT *
-FROM nyc_census_blocks;
+FROM public.nyc_census_blocks;
 
 -- Show only some columns
 SELECT blkid, boroname, popn_total,geom
