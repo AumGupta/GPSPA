@@ -2,8 +2,8 @@ database:
   database: taxidb
   host: localhost
   port: 5432
-  username: aneto
-  password: castor107
+  username: postgres
+  password: ogroot
 url: https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet
 fname: rides.parquet
 period:

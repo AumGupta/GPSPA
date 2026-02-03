@@ -1,6 +1,6 @@
 import etl as e
 import argparse
-import time
+from time import time 
 import sys
 
 
@@ -134,10 +134,9 @@ def time_this_function(func, **kwargs) -> str:
         Returns:
             a string with the execution time
     """
-    import time
-    t0 = time.time()
+    t0 = time()
     func(**kwargs)
-    t1 = time.time()
+    t1 = time()
     return f"'{func.__name__}' EXECUTED IN {t1-t0:.3f} SECONDS"
 
 def main(config_file: str) -> None:
